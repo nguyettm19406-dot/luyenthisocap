@@ -1,0 +1,84 @@
+@import "tailwindcss";
+
+@import url('https://fonts.googleapis.com/css2?family=Calistoga&family=JetBrains+Mono:wght@400;500;600&family=Roboto:wght@300;400;500;700;900&display=swap');
+
+@theme {
+  --font-sans: "Roboto", system-ui, sans-serif;
+  --font-display: "Roboto", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+
+  --color-background-custom: #FAFAFA;
+  --color-foreground-custom: #0F172A;
+  --color-border-custom: #E2E8F0;
+  --color-card-custom: #FFFFFF;
+
+  --color-accent: #0052FF;
+  --color-accent-secondary: #4D7CFF;
+
+  --animate-spin-slow: spin 60s linear infinite;
+  --animate-float: float 4s ease-in-out infinite;
+  --animate-float-slow: float-slow 6s ease-in-out infinite;
+  --animate-pulse-subtle: pulse-subtle 2s ease-in-out infinite;
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+  @keyframes float-slow {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-15px); }
+  }
+  @keyframes pulse-subtle {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.15); opacity: 0.7; }
+  }
+}
+
+/* Base style resets and utilities */
+body {
+  font-family: var(--font-sans);
+  background-color: var(--color-background-custom);
+  color: var(--color-foreground-custom);
+  overflow-x: hidden;
+}
+
+.gradient-text {
+  background: linear-gradient(135deg, #0052FF, #4D7CFF);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.bg-gradient-accent {
+  background: linear-gradient(135deg, #0052FF, #4D7CFF);
+}
+
+.bg-gradient-border {
+  background: linear-gradient(135deg, #0052FF, #4D7CFF);
+}
+
+.glow-ambient {
+  box-shadow: 0 0 40px rgba(0, 82, 255, 0.08);
+}
+
+.glass {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(226, 232, 240, 0.8);
+}
+
+.glass-dark {
+  background: rgba(15, 23, 42, 0.9);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Custom hide scrollbar */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+

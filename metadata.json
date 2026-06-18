@@ -1,0 +1,6 @@
+{
+  "name": "Luyện Thi Sơ Cấp & Ẩn Dụ",
+  "description": "Hệ thống luyện thi thử trực quan, chấm điểm tự động và theo dõi tiến độ dành cho Trần Minh Nguyệt.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
