@@ -81,6 +81,28 @@ export function getWordOverlapScore(user: string, expected: string): number {
   return matchedWords / expectedWords.length;
 }
 
+// Helper to match a sequence of words in userWords allowing minor typos of <= 1 edit distance
+function matchSequence(words: string[], target: string[]): boolean {
+  if (target.length === 0) return true;
+  for (let i = 0; i <= words.length - target.length; i++) {
+    let match = true;
+    for (let j = 0; j < target.length; j++) {
+      const uWord = words[i + j];
+      const tWord = target[j];
+      if (uWord !== tWord) {
+        // Check for 1-character typo if word length is > 2
+        const dist = getLevenshteinDistance(uWord, tWord);
+        if (dist > 1 || tWord.length <= 2) {
+          match = false;
+          break;
+        }
+      }
+    }
+    if (match) return true;
+  }
+  return false;
+}
+
 // Primary evaluator function
 export function evaluateAnswer(userAnswer: string, expectedAnswer: string): EvaluationResult {
   const originalUser = (userAnswer || "").trim();
@@ -93,6 +115,52 @@ export function evaluateAnswer(userAnswer: string, expectedAnswer: string): Eval
       hasWarning: false,
       cleanUser: ""
     };
+  }
+
+  // Check if this is Question 9 (7 eras)
+  const isQuestion9 = originalExpected.includes("Thời sáng thế") && originalExpected.includes("Thời luật pháp xuất ai cập");
+
+  if (isQuestion9) {
+    const cleanUser = cleanString(originalUser);
+    const strippedUser = stripDiacritics(cleanUser);
+    // Ignore all sequence numbers, circular numbers, indicators
+    const userWords = strippedUser.split(" ")
+      .filter(w => w.length > 0)
+      .filter(w => !/^[0-9①②③④⑤⑥⑦⑧⑨⑩⑪⑫⑬⑭⑮⑯⑰⑱⑲⑳]+$/.test(w));
+
+    const targets = [
+      ["sang", "the"],
+      ["luat", "phap", "xuat", "ai", "cap"],
+      ["quan", "xet"],
+      ["vua"],
+      ["tien", "tri"],
+      ["tin", "lanh", "thien", "dang"],
+      ["khai", "thi", "tai", "sang", "tao"]
+    ];
+
+    let allMatched = true;
+    for (const target of targets) {
+      if (!matchSequence(userWords, target)) {
+        allMatched = false;
+        break;
+      }
+    }
+
+    if (allMatched) {
+      return {
+        isCorrect: true,
+        score: 1,
+        hasWarning: false,
+        cleanUser
+      };
+    } else {
+      return {
+        isCorrect: false,
+        score: 0,
+        hasWarning: false,
+        cleanUser
+      };
+    }
   }
 
   // Helper 1: Extract parenthesized optional parts from expected answer
