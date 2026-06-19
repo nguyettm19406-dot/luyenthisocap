@@ -209,7 +209,7 @@ export const QUESTIONS: Question[] = [
       {
         id: "9_1",
         label: "① 7 thời đại dòng chảy lịch sử Kinh Thánh:",
-        expectedAnswer: "① Thời sáng thế → ② Thời luật pháp xuất ai cập → ③ Thời các quan xét → ④ Thời các vua → ⑤ Thời tiên tri → ⑥ Thời tin lành thiên đàng→ ⑦ Thời khải thị tái sáng tạo",
+        expectedAnswer: "Thời sáng thế → Thời luật pháp xuất ai cập → Thời các quan xét → Thời các vua → Thời tiên tri → Thời tin lành thiên đàng → Thời khải thị tái sáng tạo",
         explanation: ""
       }
     ]
